@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
     return {
         updateTextBox: (event) => dispatch(updateTextBox(event.target.value)),
-        addToList: () => dispatch(addToList())
+        addToList: (event) => dispatch(addToList(event))
     }
 }
 
@@ -20,7 +20,7 @@ const ListItemTextBoxComponent = (props) => {
     return(
         <div>
             <form>
-                <div className="form-group">
+                <div className="form-group mt-3">
                     <label htmlFor="listItemTextInput">List Item</label>
                     <input type="text"
                         id="listItemTextInput"

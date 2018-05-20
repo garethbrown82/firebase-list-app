@@ -9,6 +9,6 @@ var config = {
     messagingSenderId: "720579600271"
   };
 
-const firebase = firebase.initializeApp(config);
+const fire = firebase.initializeApp(config);
 
-export default firebase;
+export default fire;
