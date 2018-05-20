@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import { UPDATE_TEXT_BOX, ADD_TO_LIST } from './Actions';
+import { addNewListItem } from './Utilities';
 
 let initialState = {
     textBoxText: "initial text",
@@ -11,7 +12,8 @@ const listReducer = (state=initialState, action) => {
         case UPDATE_TEXT_BOX:
             return Object.assign({}, state, { textBoxText: action.textBoxText });
         case ADD_TO_LIST:
-            return Object.assign({}, state, { list: [...state.list].concat([state.textBoxText]) })
+            const newList = addNewListItem(state);
+            return Object.assign({}, state, { list: newList })
         default:
             return state;
     }
