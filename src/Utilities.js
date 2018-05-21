@@ -8,7 +8,7 @@ export const addNewListItem = (state, event) => {
     return [...state.list].concat([item])
 }
 
-export const loginUser = () => {
+export const loginUser = (dispatch) => {
     FirebaseConnection.loginFirebaseUser();
     return { loginMessage: "User logged in" }
 }

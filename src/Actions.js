@@ -4,10 +4,10 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const SHOW_USER = "SHOW_USER";
 
-export const addToList = (event) => {
+export const addToList = (item) => {
     return {
         type: ADD_TO_LIST,
-        event: event
+        item
     }
 }
 
@@ -18,9 +18,10 @@ export const updateTextBox = (textBoxText) => {
     }
 }
 
-export const login = () => {
+export const login = (userDisplayName) => {
     return {
-        type: LOGIN
+        type: LOGIN,
+        userDisplayName: userDisplayName
     }
 }
 

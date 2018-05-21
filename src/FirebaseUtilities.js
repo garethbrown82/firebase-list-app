@@ -1,18 +1,20 @@
 import fire from './firebase';
 import firebase from 'firebase';
+import { login, logout, addToList } from './Actions';
+import { store } from './index';
 
 class FirebaseConnection {
     static loginFirebaseUser = () => {
         const provider = new firebase.auth.GoogleAuthProvider();
         fire.auth().signInWithPopup(provider).then(function(result) {
             const user = result.user;
-            console.log("Here is the returned user object: ", user);
+            store.dispatch(login(user.displayName))
         });
     };
 
     static logoutFirebaseUser = () => {
         fire.auth().signOut().then(function() {
-            console.log("User has been signed out of Firebase");
+            store.dispatch(logout());
         }).catch(function(error) {
             console.error("There was an error while trying to logout the user");
         });
@@ -34,7 +36,7 @@ class FirebaseConnection {
                 name: currentUser.displayName,
                 itemText: item
             }).then(function() {
-                console.log(`An item has been added to the database for ${currentUser}: `, item)
+                store.dispatch(addToList(item))
             }).catch(function(error) {
                 console.error("There was an error while trying to add an item.")
             });

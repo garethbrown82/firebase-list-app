@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 import { UPDATE_TEXT_BOX, ADD_TO_LIST, LOGIN, LOGOUT } from './Actions';
-import { addNewListItem, loginUser, logoutUser } from './Utilities';
+import { addNewListItem, logoutUser } from './Utilities';
 
 let initialState = {
     textBoxText: "initial text",
@@ -13,14 +13,11 @@ const listReducer = (state=initialState, action) => {
         case UPDATE_TEXT_BOX:
             return Object.assign({}, state, { textBoxText: action.textBoxText });
         case ADD_TO_LIST:
-            const newList = addNewListItem(state, action.event);
-            return Object.assign({}, state, { list: newList });
+            return Object.assign({}, state, { list: action.newItem });
         case LOGIN:
-            const loggedInMessage = loginUser();
-            return Object.assign({}, state, loggedInMessage);
+            return Object.assign({}, state, { loginMessage: action.userDisplayName });
         case LOGOUT:
-            const loggedOutMessage = logoutUser();
-            return Object.assign({}, state, loggedOutMessage);
+            return Object.assign({}, state, { loginMessage: "Please login" });
         default:
             return state;
     }

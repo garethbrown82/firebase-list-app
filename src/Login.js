@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { login } from './Actions';
+import FirebaseConnection from './FirebaseUtilities';
 
 const mapStateToProps = (state) => {
     return {
@@ -8,22 +8,17 @@ const mapStateToProps = (state) => {
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        login: () => dispatch(login())
-    }
-}
-
-const LoginComponent = (props) => {
-    return (
-        <span>
-            <button className="btn btn-outline-primary" onClick={props.login}>Login</button>   
-            <span className="ml-3">{props.loginMessage}</span>
-        </span>
-    )
-}
+class LoginComponent extends React.Component {
+    render() {
+        return (
+            <span>
+                <button className="btn btn-outline-primary" onClick={FirebaseConnection.loginFirebaseUser}>Login</button>   
+                <span className="ml-3">{this.props.loginMessage}</span>
+            </span>
+        );
+    };
+};
 
 export const Login = connect(
-    mapStateToProps,
-    mapDispatchToProps
+    mapStateToProps
 )(LoginComponent);
