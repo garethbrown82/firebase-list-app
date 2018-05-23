@@ -4,7 +4,7 @@ import { addNewListItem } from './Utilities';
 
 let initialState = {
     textBoxText: "initial text",
-    list: ["item1", "item2"],
+    list: [],
     loginMessage: "Please login"
 }
 

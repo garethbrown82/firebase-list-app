@@ -35,8 +35,6 @@ class FirebaseConnection {
             fire.database().ref('items').push({
                 name: currentUser.displayName,
                 itemText: item
-            }).then(function() {
-                store.dispatch(addToList(item))
             }).catch(function(error) {
                 console.error("There was an error while trying to add an item.")
             });
@@ -55,11 +53,26 @@ const checkSignedInWithMessage = () => {
     }
 }
 
+const loadMessagesToList = () => {
+    let itemsDB = fire.database().ref('items');
+    itemsDB.off();
+
+    const loadItemFromFirebase = (data) => {
+        const value = data.val();
+        console.log("Item has been added to list: ", value)
+        store.dispatch(addToList(value.itemText))
+    }
+    
+    itemsDB.limitToLast(10).on('child_added', loadItemFromFirebase);
+    itemsDB.limitToLast(10).on('child_changed', loadItemFromFirebase);
+}
+
 firebase.auth().onAuthStateChanged(function(user) {
     if (user) {
-        console.log("onAuthStateChanged: ", user)
+        loadMessagesToList();
+        console.log("onAuthStateChanged: ", user);
     } else {
-        console.log("onAuthStateChanged user logged out")
+        console.log("onAuthStateChanged user logged out");
     }
 });
 
