@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-import { logout } from './Actions';
 import FirebaseConnection from './FirebaseUtilities';
 
 const mapStateToProps = (state) => {

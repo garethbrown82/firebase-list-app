@@ -1,10 +1,6 @@
 import FirebaseConnection from './FirebaseUtilities';
 
-export const addNewListItem = (state, event) => {
-    event.preventDefault();
-    const item = state.textBoxText;
-    
-    FirebaseConnection.addItemToFirebaseList(item)
+export const addNewListItem = (state, item) => {
     return [...state.list].concat([item])
 }
 

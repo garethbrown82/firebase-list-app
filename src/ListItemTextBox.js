@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { updateTextBox } from './Actions';
-import { addToList } from './Actions';
 import FirebaseUtilities from './FirebaseUtilities';
 
 const mapStateToProps = (state, ownProps) => {
@@ -10,10 +9,18 @@ const mapStateToProps = (state, ownProps) => {
     }
 }
 
-class ListItemTextBoxComponent extends React.Component {
-    addItemToFirebaseList = () => {
-        FirebaseUtilities.addItemToFirebaseList(this.props.textBoxText)
+const mapDispatchToProps = (dispatch, ownProps) => {
+    return {
+        updateTextBox: (event) => dispatch(updateTextBox(event.target.value))
     }
+}
+
+class ListItemTextBoxComponent extends React.Component {
+    addItemToFirebaseList = (event) => {
+        event.preventDefault();
+        FirebaseUtilities.addItemToFirebaseList(this.props.textBoxText);
+    }
+
     render() {
         return(
             <div>
@@ -37,5 +44,6 @@ class ListItemTextBoxComponent extends React.Component {
 };
 
 export const ListItemTextBox = connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(ListItemTextBoxComponent);
