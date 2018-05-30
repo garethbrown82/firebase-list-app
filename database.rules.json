@@ -1,6 +1,9 @@
 {
   "rules": {
-    ".read": "auth != null",
-    ".write": "auth != null"
+    "items": {
+      ".read": "auth.uid != null && query.orderByChild == 'messageUid' && query.equalTo == auth.uid",
+      ".write": "auth != null",
+      ".indexOn": "messageUid"
+    }
   }
 }

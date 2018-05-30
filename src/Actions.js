@@ -3,6 +3,7 @@ export const UPDATE_TEXT_BOX = "UPDATE_TEXT_BOX";
 export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const SHOW_USER = "SHOW_USER";
+export const CLEAR_LIST = "CLEAR_LIST";
 
 export const addToList = (item) => {
     return {
@@ -15,6 +16,12 @@ export const updateTextBox = (textBoxText) => {
     return {
         type: UPDATE_TEXT_BOX,
         textBoxText
+    }
+}
+
+export const clearList = () => {
+    return {
+        type: CLEAR_LIST
     }
 }
 

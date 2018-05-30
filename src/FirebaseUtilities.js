@@ -1,6 +1,6 @@
 import fire from './firebase';
 import firebase from 'firebase';
-import { login, logout, addToList } from './Actions';
+import { login, logout, addToList, clearList } from './Actions';
 import { store } from './index';
 
 class FirebaseConnection {
@@ -34,7 +34,8 @@ class FirebaseConnection {
             const currentUser = fire.auth().currentUser;
             fire.database().ref('items').push({
                 name: currentUser.displayName,
-                itemText: item
+                itemText: item,
+                messageUid: currentUser.uid
             }).catch(function(error) {
                 console.error("There was an error while trying to add an item.")
             });
@@ -63,11 +64,18 @@ const loadMessagesToList = () => {
         store.dispatch(addToList(value.itemText))
     }
     
-    itemsDB.limitToLast(10).on('child_added', loadItemFromFirebase);
-    itemsDB.limitToLast(10).on('child_changed', loadItemFromFirebase);
+    itemsDB.limitToLast(10)
+        .orderByChild("messageUid")
+        .equalTo(fire.auth().currentUser.uid)
+        .on('child_added', loadItemFromFirebase);
+    itemsDB.limitToLast(10)
+        .orderByChild("messageUid")
+        .equalTo(fire.auth().currentUser.uid)
+        .on('child_changed', loadItemFromFirebase);
 }
 
 firebase.auth().onAuthStateChanged(function(user) {
+    store.dispatch(clearList());
     if (user) {
         loadMessagesToList();
         console.log("onAuthStateChanged: ", user);

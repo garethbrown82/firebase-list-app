@@ -12,8 +12,8 @@ class LoginComponent extends React.Component {
     render() {
         return (
             <span>
+                <span className="mr-3">{this.props.loginMessage}</span>
                 <button className="btn btn-outline-primary" onClick={FirebaseConnection.loginFirebaseUser}>Login</button>   
-                <span className="ml-3">{this.props.loginMessage}</span>
             </span>
         );
     };
