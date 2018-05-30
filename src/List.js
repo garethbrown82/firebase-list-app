@@ -9,7 +9,7 @@ const ListComponent = (props) => {
     return(
         <div>
             <ul>
-                {props.list.map((value, index) => <li key={index}>{value}</li>)}
+                {props.list.map((value, index) => <li key={index}>{value.item.itemText}</li>)}
             </ul>
         </div>
     )

@@ -4,6 +4,7 @@ export const LOGIN = "LOGIN";
 export const LOGOUT = "LOGOUT";
 export const SHOW_USER = "SHOW_USER";
 export const CLEAR_LIST = "CLEAR_LIST";
+export const CHANGE_LIST_ITEM = "CHANGE_LIST_ITEM"
 
 export const addToList = (item) => {
     return {
@@ -22,6 +23,13 @@ export const updateTextBox = (textBoxText) => {
 export const clearList = () => {
     return {
         type: CLEAR_LIST
+    }
+}
+
+export const changeListItem = (value) => {
+    return {
+        type: CHANGE_LIST_ITEM,
+        value: value
     }
 }
 

@@ -1,6 +1,6 @@
 import fire from './firebase';
 import firebase from 'firebase';
-import { login, logout, addToList, clearList } from './Actions';
+import { login, logout, addToList, clearList, changeListItem } from './Actions';
 import { store } from './index';
 
 class FirebaseConnection {
@@ -59,9 +59,21 @@ const loadMessagesToList = () => {
     itemsDB.off();
 
     const loadItemFromFirebase = (data) => {
-        const value = data.val();
+        const value = {
+            key: data.key,
+            item: data.val()
+        }
         console.log("Item has been added to list: ", value)
-        store.dispatch(addToList(value.itemText))
+        store.dispatch(addToList(value))
+    }
+
+    const changeItemFromFirebase = (data) => {
+        const value = {
+            key: data.key,
+            item: data.val()
+        }
+        console.log("Item has been changed: ", value)
+        store.dispatch(changeListItem(value))
     }
     
     itemsDB.limitToLast(10)
@@ -71,7 +83,7 @@ const loadMessagesToList = () => {
     itemsDB.limitToLast(10)
         .orderByChild("messageUid")
         .equalTo(fire.auth().currentUser.uid)
-        .on('child_changed', loadItemFromFirebase);
+        .on('child_changed', changeItemFromFirebase);
 }
 
 firebase.auth().onAuthStateChanged(function(user) {
