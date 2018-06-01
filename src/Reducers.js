@@ -16,6 +16,7 @@ const listReducer = (state=initialState, action) => {
             const newList = addNewListItem(state, action.newItem);
             return Object.assign({}, state, { list: newList });
         case CLEAR_LIST:
+            console.log("Clearing list")
             return Object.assign({}, state, { list: [] });
         case CHANGE_LIST_ITEM:
             const newChangedList = changeListItem(state, action.value);
