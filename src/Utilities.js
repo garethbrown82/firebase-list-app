@@ -5,14 +5,13 @@ export const addNewListItem = (state, item) => {
 }
 
 export const changeListItem = (state, value) => {
-    let currentList = [...state.list];
-    console.log("current list: ", currentList)
+    let changingList = [...state.list];
+    console.log("current list: ", changingList)
     console.log("changed value: ", value)
-    const indexToChange = currentList.findIndex(item => item.key === value.key);
-    currentList[indexToChange] = value;
-    //const newList = Object.assign([...currentList], {indexToChange: value} ); // tried to be immutable
-    console.log("New list: ", currentList)
-    return currentList;
+    const indexToChange = changingList.findIndex(item => item.key === value.key);
+    changingList[indexToChange] = value;
+    console.log("New list: ", changingList)
+    return changingList;
 }
 
 export const loginUser = (dispatch) => {

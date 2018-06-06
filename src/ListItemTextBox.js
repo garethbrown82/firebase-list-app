@@ -23,10 +23,10 @@ class ListItemTextBoxComponent extends React.Component {
 
     render() {
         return(
-            <div>
+            <div className="mt-5">
                 <form>
                     <div className="form-group mt-3">
-                        <label htmlFor="listItemTextInput">List Item</label>
+                        <label htmlFor="listItemTextInput"><h4>Add item</h4></label>
                         <input type="text"
                             id="listItemTextInput"
                             className="form-control"

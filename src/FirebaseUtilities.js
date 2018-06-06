@@ -1,6 +1,6 @@
 import fire from './firebase';
 import firebase from 'firebase';
-import { login, logout, addToList, clearList, changeListItem } from './Actions';
+import { login, logout, addToList, clearList, changeListItem, deleteItem } from './Actions';
 import { store } from './index';
 
 class FirebaseConnection {
@@ -43,6 +43,12 @@ class FirebaseConnection {
             console.log("There is no logged in user to add an item.")
         }
     }
+
+    static deleteItemFromFirebaseList = (itemKey) => {
+        if (checkSignedInWithMessage() && itemKey) {
+            fire.database().ref('items').child(itemKey).remove()
+        }
+    }
 };
 
 const checkSignedInWithMessage = () => {
@@ -75,6 +81,10 @@ const loadMessagesToList = () => {
         console.log("Item has been changed: ", value)
         store.dispatch(changeListItem(value))
     }
+
+    const itemRemovedFromFirebase = (data) => {
+        store.dispatch(deleteItem(data.key))
+    }
     
     itemsDB.limitToLast(10)
         .orderByChild("messageUid")
@@ -84,6 +94,10 @@ const loadMessagesToList = () => {
         .orderByChild("messageUid")
         .equalTo(fire.auth().currentUser.uid)
         .on('child_changed', changeItemFromFirebase);
+    itemsDB.limitToLast(10)
+        .orderByChild("messageUid")
+        .equalTo(fire.auth().currentUser.uid)
+        .on('child_removed', itemRemovedFromFirebase);
 }
 
 firebase.auth().onAuthStateChanged(function(user) {

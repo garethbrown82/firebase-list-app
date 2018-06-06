@@ -5,6 +5,7 @@ export const LOGOUT = "LOGOUT";
 export const SHOW_USER = "SHOW_USER";
 export const CLEAR_LIST = "CLEAR_LIST";
 export const CHANGE_LIST_ITEM = "CHANGE_LIST_ITEM"
+export const DELETE_ITEM = "DELETE_ITEM"
 
 export const addToList = (item) => {
     return {
@@ -43,5 +44,12 @@ export const login = (userDisplayName) => {
 export const logout = () => {
     return {
         type: LOGOUT
+    }
+}
+
+export const deleteItem = (itemKey) => {
+    return {
+        type: DELETE_ITEM,
+        itemKey
     }
 }
