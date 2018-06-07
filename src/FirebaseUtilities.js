@@ -61,7 +61,11 @@ const checkSignedInWithMessage = () => {
 }
 
 const loadMessagesToList = () => {
-    let itemsDB = fire.database().ref('items');
+    let itemsDB = fire.database().ref('items')
+        .limitToLast(10)
+        .orderByChild("messageUid")
+        .equalTo(fire.auth().currentUser.uid);
+
     itemsDB.off();
 
     const loadItemFromFirebase = (data) => {
@@ -86,18 +90,9 @@ const loadMessagesToList = () => {
         store.dispatch(deleteItem(data.key))
     }
     
-    itemsDB.limitToLast(10)
-        .orderByChild("messageUid")
-        .equalTo(fire.auth().currentUser.uid)
-        .on('child_added', loadItemFromFirebase);
-    itemsDB.limitToLast(10)
-        .orderByChild("messageUid")
-        .equalTo(fire.auth().currentUser.uid)
-        .on('child_changed', changeItemFromFirebase);
-    itemsDB.limitToLast(10)
-        .orderByChild("messageUid")
-        .equalTo(fire.auth().currentUser.uid)
-        .on('child_removed', itemRemovedFromFirebase);
+    itemsDB.on('child_added', loadItemFromFirebase);
+    itemsDB.on('child_changed', changeItemFromFirebase);
+    itemsDB.on('child_removed', itemRemovedFromFirebase);
 }
 
 firebase.auth().onAuthStateChanged(function(user) {
